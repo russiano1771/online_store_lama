@@ -1,0 +1,87 @@
+.cart{
+  position: absolute;
+  top: 110px;
+  right: 20px;
+  background-color: white;
+  padding: 20px;
+  -webkit-box-shadow: 0 0 7px -5px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 7px -5px rgba(0, 0, 0, .5);
+  z-index:999;
+  border: 1px solid black;
+  transition: all 1s ease;
+  cursor: pointer;
+
+  .item:hover{
+    transform: scale(1.05);
+  }
+
+  h1{
+    margin-bottom: 30px;
+    color: grey;
+    font-weight: 400;
+    font-size: 21px;
+  }
+
+  .item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    transition: .5s;
+
+    img{
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+    }
+    .details{
+
+      h1{
+        font-size: 16px;
+        font-weight: 400;
+      }
+      p{
+        color: grey;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 10px;
+      }
+      .price{
+        color: #2879fe;
+      }
+
+    }
+    .delete{
+      color: red;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+  button{
+    width: 200px;
+    background-color: #2879fe;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: none;
+    gap: 10px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .total{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .reset{
+    color: red;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
