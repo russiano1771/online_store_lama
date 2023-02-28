@@ -10,8 +10,8 @@ const Home = () => {
         <div className={'home'}>
             <Slider/>
             <FeaturedProducts type={'featured'}/>
-            <FeaturedProducts type={'trending'}/>
             <Categories/>
+            <FeaturedProducts type={'trending'}/>
             <Contact/>
         </div>
     );

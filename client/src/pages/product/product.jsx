@@ -3,59 +3,91 @@ import './product.scss'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import BalanceIcon from '@mui/icons-material/Balance';
+import useFetch from "../../hooks/useFetch2";
+import {useParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {addToCart} from "../../redux/cartReducer";
+
+
 const Product = () => {
-    const [selectedImg, setSelectedImg] = useState(0)
-    const [quantity, setQuantity] = useState(0)
-    const data = [
-        'https://images.asos-media.com/products/daisy-street-90s-blazer-in-brown-croc-co-ord/203052754-1-browncroc?$n_480w$&wid=476&fit=constrain',
-        'https://images.asos-media.com/products/heartbreak-tall-halter-neck-cropped-waistcoat-co-ord-in-purple-check/202065906-1-purplecheck?$n_480w$&wid=476&fit=constrain',
-        'https://images.asos-media.com/products/yas-linen-mix-tailored-blazer-co-ord-in-yellow/202805733-1-yellow?$n_480w$&wid=476&fit=constrain'
-    ]
+    const id = useParams().id
+    const [selectedImg, setSelectedImg] = useState("img")
+    const [quantity, setQuantity] = useState(1)
+    const { data, loading, error } = useFetch(`/products/${id}?populate=*`); /// populate = заселяет фотографии
+    const dispatch = useDispatch()
     return (
         <div className={'product'}>
-            <div className="left">
+            {loading ? ("Loading, please Wait") : (<>
+                <div className="left">
                 <div className="images">
-                    <img src={data[0]} alt={''} onClick={e => setSelectedImg(0)}/>
-                    <img src={data[1]} alt={''} onClick={e => setSelectedImg(1)}/>
-                    <img src={data[2]} alt={''} onClick={e => setSelectedImg(2)}/>
+                    <img
+                        src={
+                            process.env.REACT_APP_UPLOAD_URL +
+                            data?.attributes?.img?.data?.attributes?.url
+                        }
+                        alt=""
+                        onClick={(e) => setSelectedImg("img")}
+                    />
+                    <img
+                        src={
+                            process.env.REACT_APP_UPLOAD_URL +
+                            data?.attributes?.img2?.data?.attributes?.url
+                        }
+                        alt=""
+                        onClick={(e) => setSelectedImg("img2")}
+                    />
                 </div>
                 <div className="mainImage">
-                    <img src={data[selectedImg]} alt={''}/>
-                </div>
+                    <img
+                        src={
+                            process.env.REACT_APP_UPLOAD_URL +
+                            data?.attributes[selectedImg]?.data?.attributes?.url
+                        }
+                        alt=""
+                    />                </div>
             </div>
-            <div className="right">
-                <h1>Product Name</h1>
-                <span className={'price'}>$199.00</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis doloribus eius fugit hic impedit itaque, iure iusto minus odit pariatur provident quidem tempore veritatis! Ad aliquam amet assumenda aut blanditiis consectetur dolorem dolores eveniet expedita fugiat impedit inventore itaque minima molestiae nostrum placeat quae quibusdam repellat sequi ut, voluptas voluptates?</p>
+                <div className="right">
+                <h1>{data?.attributes?.title}</h1>
+                <span className={'price'}>RUB {data?.attributes?.price}</span>
+                <p>{data?.attributes?.desc}</p>
                 <div className="quantity">
-                    <button disabled={quantity === 0} onClick={() => setQuantity(prev => prev - 1)}>-</button>
-                    {quantity}
-                    <button onClick={() => setQuantity(prev => prev + 1)}>+</button>
+                <button disabled={quantity === 0} onClick={() => setQuantity(prev => prev - 1)}>-</button>
+                {quantity}
+                <button onClick={() => setQuantity(prev => prev + 1)}>+</button>
                 </div>
-                    <button className="add">
-                        <AddShoppingCartIcon/> ADD TO BASKET
-                    </button>
-                    <div className="link">
-                        <div className="item">
-                            <FavoriteBorderIcon/>ADD  WISH LIST
-                        </div>
-                        <div className="item">
-                            <BalanceIcon/>ADD TO COMPARE
-                        </div>
-                    </div>
-                    <div className="info">
-                        <span>Vendor: Polo</span>
-                        <span>Product Type: T-shirt</span>
-                        <span>Tag: T-shirt, Women, Top</span>
-                    </div>
-                    <div className="info">
-                        <span>DESCRIPTION</span>
-                        <hr/>
-                        <span>ADDITIONAL INFO</span>
-                        <hr/>
-                        <span>F.A.Q</span>
-                    </div>
-            </div>
+                <button className="add" onClick={() => dispatch(addToCart({
+                    id: data.id,
+                    title: data.attributes.title,
+                    desc: data.attributes.desc,
+                    price: data.attributes.price,
+                    img: data.attributes.img.data.attributes.url,
+                    quantity
+                }))}>
+                <AddShoppingCartIcon/> ADD TO BASKET
+                </button>
+                <div className="link">
+                <div className="item">
+                <FavoriteBorderIcon/>ADD  WISH LIST
+                </div>
+                <div className="item">
+                <BalanceIcon/>ADD TO COMPARE
+                </div>
+                </div>
+                <div className="info">
+                <span>Vendor: Polo</span>
+                <span>Product Type: T-shirt</span>
+                <span>Tag: T-shirt, Women, Top</span>
+                </div>
+                <div className="info">
+                <span>DESCRIPTION</span>
+                <hr/>
+                <span>ADDITIONAL INFO</span>
+                <hr/>
+                <span>F.A.Q</span>
+                </div>
+                </div>
+                </>
+                )}
         </div>
     );
 };

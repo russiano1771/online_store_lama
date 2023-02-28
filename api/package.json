@@ -4,23 +4,23 @@
   "version": "0.1.0",
   "description": "A Strapi application",
   "scripts": {
-    "develop": "../../lamaDev-online-store-1/api/node_modules/.bin/strapi develop",
-    "start": "../../lamaDev-online-store-1/api/node_modules/.bin/strapi start",
-    "build": "../../lamaDev-online-store-1/api/node_modules/.bin/strapi build",
-    "strapi": "../../lamaDev-online-store-1/api/node_modules/.bin/strapi"
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
   },
   "devDependencies": {},
   "dependencies": {
     "@strapi/strapi": "4.6.1",
     "@strapi/plugin-users-permissions": "4.6.1",
     "@strapi/plugin-i18n": "4.6.1",
-    "better-sqlite3": "8.0.1"
+    "pg": "8.8.0"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "bc1feacc-f6a7-41fc-b105-5f04ec275d31"
+    "uuid": "d5d12f8c-5f83-4e69-b505-8577f38099d4"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
